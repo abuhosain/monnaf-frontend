@@ -24,6 +24,7 @@ import {
 } from "@ant-design/icons";
 import SectionTitle from "../../components/ui/shared/SectionTitle";
 import { useState, useEffect } from "react";
+import { useTestimonials } from "../../api/useTestimonials";
 
 const Testimonial = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -41,7 +42,8 @@ const Testimonial = () => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  const testimonials = [
+  const { data: testimonials = [] } = useTestimonials();
+  const testimonialsStatic = [
     {
       id: 1,
       image:
@@ -269,7 +271,7 @@ const Testimonial = () => {
               paddingBottom: isMobile ? "60px" : isTablet ? "70px" : "80px",
             }}
           >
-            {testimonials.map((testimonial) => (
+            {(testimonials.length ? testimonials : testimonialsStatic).map((testimonial: any) => (
               <SwiperSlide
                 key={testimonial.id}
                 style={{

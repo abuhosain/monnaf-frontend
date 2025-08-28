@@ -1,6 +1,6 @@
 "use client"
 
-import PortfolioTabs from "../../components/PortfolioTabs"
+import PortfolioTabs from "../../components/PortfolioTabs" 
 import SectionTitle from "../../components/ui/shared/SectionTitle"
 
 export default function Portfolio() {
@@ -20,7 +20,7 @@ export default function Portfolio() {
           description="Explore my diverse portfolio of creative projects spanning graphics design, motion graphics, and video editing. Each project represents a unique challenge solved with creativity and technical expertise."
         />
 
-        {/* Portfolio Tabs */}
+        {/* Portfolio Tabs (pass data via context/props later if needed) */}
         <div className="mt-8 sm:mt-12 lg:mt-16">
           <PortfolioTabs />
         </div>

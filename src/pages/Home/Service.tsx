@@ -1,30 +1,11 @@
 "use client"
 
-import graphics from "../../assets/icons/graphics.png"
-import motion from "../../assets/icons/motion.png"
-import video from "../../assets/icons/video-icons.png"
 import SectionTitle from "../../components/ui/shared/SectionTitle"
 import ServiceCard from "../../components/ui/shared/SeviceCard"
+import { useServices } from "../../api/useServices"
 
 export default function Service() {
-  const services = [
-    {
-      image: graphics,
-      title: "Graphics Design",
-      description:
-        "Product design is understanding the end-user customer, the person for whom the product is being created.",
-    },
-    {
-      image: motion,
-      title: "Motion Graphics Design",
-      description: "Product managers and engineers to gather requirements from users before designing ideas.",
-    },
-    {
-      image: video,
-      title: "Video Editing",
-      description: "The design of interactive products and services in which a designer's focus goes beyond.",
-    },
-  ]
+  const { data, loading } = useServices()
 
   return (
     <div className="bg-black min-h-screen relative overflow-hidden flex items-center py-8 sm:py-12 lg:py-16">
@@ -44,8 +25,13 @@ export default function Service() {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 mt-8 sm:mt-12 lg:mt-16 px-2 sm:px-4 lg:px-6">
-          {services.map((service, index) => (
-            <ServiceCard key={index} image={service.image} title={service.title} description={service.description} />
+          {(loading ? [] : data).map((service: any, index: number) => (
+            <ServiceCard
+              key={service._id || index}
+              image={service.imageUrl || ""}
+              title={service.title}
+              description={service.description}
+            />
           ))}
         </div>
       </div>

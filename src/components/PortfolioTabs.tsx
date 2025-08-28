@@ -5,14 +5,7 @@ import type React from "react";
 import { Tabs } from "antd";
 import { ExternalLinkIcon, EyeIcon } from "lucide-react";
 
-import brandIdentity from "../assets/portfolio/brand-itenty.jpg";
-import comercialVideo from "../assets/portfolio/comercial-video.jpg";
-import corporateLogo from "../assets/portfolio/corporate-logo.jpg";
-import documentaryVideo from "../assets/portfolio/documentary-video.jpg";
-import explainerVideo from "../assets/portfolio/explainer-video.jpg";
-import packageDesign from "../assets/portfolio/explainer-video.jpg";
-import productAnimation from "../assets/portfolio/product-animation.jpg";
-import uiAnimation from "../assets/portfolio/ui-animation.png";
+import { usePortfolios } from "../api/usePortfolios";
 
 interface Project {
   id: number;
@@ -25,88 +18,16 @@ interface Project {
 }
 
 const PortfolioTabs = () => {
-  const projects: Project[] = [
-    {
-      id: 1,
-      image: brandIdentity,
-      title: "Brand Identity Design",
-      description:
-        "Complete brand identity package including logo, color palette, and brand guidelines for a tech startup.",
-      link: "https://example.com/project1",
-      category: "graphics",
-      technologies: ["Illustrator", "Photoshop", "InDesign"],
-    },
-    {
-      id: 2,
-      image: corporateLogo,
-      title: "Corporate Logo Design",
-      description:
-        "Modern and minimalist logo design for a financial services company with multiple variations.",
-      link: "https://example.com/project2",
-      category: "graphics",
-      technologies: ["Illustrator", "Photoshop"],
-    },
-    {
-      id: 3,
-      image: productAnimation,
-      title: "Product Animation",
-      description:
-        "3D product showcase animation for e-commerce platform with smooth transitions and effects.",
-      link: "https://example.com/project3",
-      category: "motion",
-      technologies: ["After Effects", "Cinema 4D"],
-    },
-    {
-      id: 4,
-      image: explainerVideo,
-      title: "Explainer Video",
-      description:
-        "Animated explainer video for SaaS platform explaining complex features in simple terms.",
-      link: "https://example.com/project4",
-      category: "motion",
-      technologies: ["After Effects", "Illustrator"],
-    },
-    {
-      id: 5,
-      image: documentaryVideo,
-      title: "Documentary Edit",
-      description:
-        "Professional documentary editing with color grading, sound design, and motion graphics.",
-      link: "https://example.com/project5",
-      category: "video",
-      technologies: ["Premiere Pro", "After Effects"],
-    },
-    {
-      id: 6,
-      image: comercialVideo,
-      title: "Commercial Video",
-      description:
-        "High-end commercial video production with cinematic color grading and visual effects.",
-      link: "https://example.com/project6",
-      category: "video",
-      technologies: ["Premiere Pro", "DaVinci Resolve"],
-    },
-    {
-      id: 7,
-      image: packageDesign,
-      title: "Package Design",
-      description:
-        "Creative package design for organic food products with eco-friendly design approach.",
-      link: "https://example.com/project7",
-      category: "graphics",
-      technologies: ["Illustrator", "Photoshop"],
-    },
-    {
-      id: 8,
-      image: uiAnimation,
-      title: "UI Animation",
-      description:
-        "Smooth UI animations and micro-interactions for mobile app interface design.",
-      link: "https://example.com/project8",
-      category: "motion",
-      technologies: ["After Effects", "Lottie"],
-    },
-  ];
+  const { data } = usePortfolios();
+  const projects: Project[] = (data || []).map((p: any, idx: number) => ({
+    id: idx + 1,
+    image: p.imageUrl || "",
+    title: p.title || "",
+    description: p.description || "",
+    link: p.link || "#",
+    category: (p.category || "").toLowerCase(),
+    technologies: [],
+  }));
 
   const filterProjects = (category: string) => {
     return projects.filter((project) => project.category === category);
